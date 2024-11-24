@@ -208,13 +208,19 @@ const AddOrUpdateProduct = ({
     }
 
     try {
+      let response = null;
+
       if (addProduct) {
         response = await createProductsApi(formData);
       } else if (editProduct) {
         response = await updateProductsApi(formData, product.id);
       }
 
-      await fetchProducts();
+      if (response) {
+        await fetchProducts();
+      } else {
+        throw new Error("Something went wrong");
+      }
 
       let msg = addProduct
         ? "Product added successfully!"

@@ -81,7 +81,7 @@ const AddOrUpdateCategory = ({
     }
 
     try {
-      let res;
+      let res = null;
 
       if (addCategory) {
         apiUrl = `${metadata.api}`;
