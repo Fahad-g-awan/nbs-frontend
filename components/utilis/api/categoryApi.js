@@ -2,7 +2,8 @@ import api from "./api";
 
 export const getCategoryApi = async (endpoint) => {
   try {
-    let response = await api.get(`/${endpoint}`);
+    console.log("endpoint", endpoint);
+    let response = await api.get(`${endpoint}`);
     console.log("Category API response", response.data);
 
     return response.data;
@@ -17,7 +18,7 @@ export const getCategoryApi = async (endpoint) => {
 
 export const createCategoryApi = async (endpoint, data) => {
   try {
-    let response = await api.post(`/${endpoint}`, data, {
+    let response = await api.post(`${endpoint}`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -36,7 +37,7 @@ export const createCategoryApi = async (endpoint, data) => {
 
 export const updateCategoryApi = async (endpoint, data) => {
   try {
-    let response = await api.put(`/${endpoint}`, data, {
+    let response = await api.put(`${endpoint}`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -55,7 +56,7 @@ export const updateCategoryApi = async (endpoint, data) => {
 
 export const deleteCategoryApi = async (endpoint) => {
   try {
-    let response = await api.delete(`/${endpoint}`, {
+    let response = await api.delete(`${endpoint}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
