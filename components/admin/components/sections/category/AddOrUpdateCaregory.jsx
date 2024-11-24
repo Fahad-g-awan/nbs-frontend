@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import { ArrowRight, X } from "lucide-react";
 import { toast } from "react-toastify";
 import { useAppHook } from "@/components/utilis/hooks/AppHook";
+import {
+  createCategoryApi,
+  updateCategoryApi,
+} from "@/components/utilis/api/categoryApi";
 
 const AddOrUpdateCategory = ({
   editCategory = false,
@@ -59,14 +63,6 @@ const AddOrUpdateCategory = ({
     let payload = null;
     let apiUrl = "";
 
-    if (addCategory) {
-      apiMethod = "post";
-      apiUrl = `http://localhost:5000/api/${metadata.api}`;
-    } else if (editCategory) {
-      apiUrl = `http://localhost:5000/api/${metadata.api}/${category.id}`;
-      apiMethod = "put";
-    }
-
     if (metadata.field == "category" && (addCategory || editCategory)) {
       payload = {
         category: categoryName,
@@ -85,13 +81,21 @@ const AddOrUpdateCategory = ({
     }
 
     try {
-      const res = await axios[apiMethod](apiUrl, payload, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      let res;
 
-      await fetchCategories();
+      if (addCategory) {
+        apiUrl = `${metadata.api}`;
+        res = await createCategoryApi(apiUrl, payload);
+      } else if (editCategory) {
+        apiUrl = `${metadata.api}/${category.id}`;
+        res = await updateCategoryApi(apiUrl, payload);
+      }
+
+      if (res) {
+        await fetchCategories();
+      } else {
+        throw new Error("Something went wrong");
+      }
 
       let msg = addProduct
         ? "Category added successfully!"

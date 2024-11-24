@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 
 import { useAppHook } from "@/components/utilis/hooks/AppHook";
+import { deleteProductsApi } from "@/components/utilis/api/productsApi";
 
 const DeleteProduct = ({ fetchProducts, product, closeModal }) => {
   const { dispatch, state } = useAppHook();
@@ -11,10 +12,7 @@ const DeleteProduct = ({ fetchProducts, product, closeModal }) => {
     dispatch({ type: "SET_IS_LOADING", payload: true });
 
     try {
-      const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/products/${product.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await deleteProductsApi(product.id);
 
       await fetchProducts();
 

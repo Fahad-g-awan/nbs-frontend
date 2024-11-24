@@ -6,6 +6,7 @@ import { useAppHook } from "@/components/utilis/hooks/AppHook";
 import AddOrUpdateCategory from "./AddOrUpdateCaregory";
 import DeleteCategory from "./DeleteCategory";
 import CategoryList from "./CategoryList";
+import { getCategoryApi } from "@/components/utilis/api/categoryApi";
 
 const Category = ({ metadata }) => {
   const [deleteCategory, setDeleteCategory] = useState(false);
@@ -21,9 +22,9 @@ const Category = ({ metadata }) => {
     dispatch({ type: "SET_IS_LOADING", payload: true });
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/${metadata.api}`);
-      setCategories(res.data);
-      console.log("res", res.data);
+      const res = await getCategoryApi(metadata.api);
+      setCategories(res);
+      console.log("res", res);
     } catch (error) {
       console.log("Error fetching categories:", error.message);
 
@@ -96,14 +97,14 @@ const Category = ({ metadata }) => {
 
       {editCategory || addCategory ? (
         <AddOrUpdateCategory
-        fetchCategories={fetchCategories}
-        setEditCategory={setEditCategory}
-        setAddCategory={setAddCategory}
-        editCategory={editCategory}
-        addCategory={addCategory}
-        category={category}
-        metadata={metadata}
-        setTitle={setTitle}
+          fetchCategories={fetchCategories}
+          setEditCategory={setEditCategory}
+          setAddCategory={setAddCategory}
+          editCategory={editCategory}
+          addCategory={addCategory}
+          category={category}
+          metadata={metadata}
+          setTitle={setTitle}
         />
       ) : (
         <CategoryList

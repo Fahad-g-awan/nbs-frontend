@@ -5,6 +5,7 @@ import axios from "axios";
 import AddOrUpdateProduct from "./AddOrUpdateProduct";
 import DeleteProduct from "./DeleteProduct";
 import ProductList from "./ProductList.";
+import { getProductsApi } from "@/components/utilis/api/productsApi";
 
 const Product = () => {
   const [editProduct, setEditProduct] = useState(false);
@@ -18,8 +19,8 @@ const Product = () => {
   const router = useRouter();
 
   const fetchProducts = async () => {
-    const res = await axios.get("http://localhost:5000/api/products");
-    setProducts(res.data.length ? res.data : []);
+    const res = await getProductsApi();
+    setProducts(res.length ? res : []);
   };
 
   const handleTitleAndSection = (newTitle) => {

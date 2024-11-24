@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 
 import { useAppHook } from "@/components/utilis/hooks/AppHook";
+import { deleteCategoryApi } from "@/components/utilis/api/categoryApi";
 
 const DeleteCategory = ({
   category,
@@ -19,16 +20,14 @@ const DeleteCategory = ({
       if (!category) {
         throw new Error("Missing category ID");
       }
-      await axios.delete(
-        `http://localhost:5000/api/${metadata.api}/${category.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
 
-      await fetchCategories();
+      let res = await deleteCategoryApi(`${metadata.api}/${category.id}`);
+
+      if (res) {
+        await fetchCategories();
+      } else {
+        throw new Error("Something went wrong");
+      }
 
       toast.success("Category deleted successfully!", {
         position: "top-right",

@@ -1,13 +1,13 @@
 import api from "./api";
 
-export const getProductsApi = async () => {
+export const getCategoryApi = async (endpoint) => {
   try {
-    let response = await api.get("/products");
-    console.log("Products API response", response.data);
+    let response = await api.get(`/${endpoint}`);
+    console.log("Category API response", response.data);
 
     return response.data;
   } catch (error) {
-    console.log("Products API error", error);
+    console.log("Category API error", error);
 
     throw new Error(
       error?.response?.data || "Something went wrong, please try again"
@@ -15,19 +15,18 @@ export const getProductsApi = async () => {
   }
 };
 
-export const createProductsApi = async (data) => {
+export const createCategoryApi = async (endpoint, data) => {
   try {
-    let response = await api.post("/products", data, {
+    let response = await api.post(`/${endpoint}`, data, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("Products API response", response.data);
+    console.log("Category API response", response.data);
 
     return response.data;
   } catch (error) {
-    console.log("Products API error", error);
+    console.log("Category API error", error);
 
     throw new Error(
       error?.response?.data || "Something went wrong, please try again"
@@ -35,19 +34,18 @@ export const createProductsApi = async (data) => {
   }
 };
 
-export const updateProductsApi = async (data, id) => {
+export const updateCategoryApi = async (endpoint, data) => {
   try {
-    let response = await api.put(`/products/${id}`, data, {
+    let response = await api.put(`/${endpoint}`, data, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("Products API response", response.data);
+    console.log("Category API response", response.data);
 
     return response.data;
   } catch (error) {
-    console.log("Products API error", error);
+    console.log("Category API error", error);
 
     throw new Error(
       error?.response?.data || "Something went wrong, please try again"
@@ -55,19 +53,18 @@ export const updateProductsApi = async (data, id) => {
   }
 };
 
-export const deleteProductsApi = async (id) => {
+export const deleteCategoryApi = async (endpoint) => {
   try {
-    let response = await api.delete(`/products/${id}`, {
+    let response = await api.delete(`/${endpoint}`, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("Products API response", response.data);
+    console.log("Category API response", response.data);
 
     return response.data;
   } catch (error) {
-    console.log("Products API error", error);
+    console.log("Category API error", error);
 
     throw new Error(
       error?.response?.data || "Something went wrong, please try again"

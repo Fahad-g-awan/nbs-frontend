@@ -4,6 +4,11 @@ import axios from "axios";
 
 import { useAppHook } from "@/components/utilis/hooks/AppHook";
 import AddProductCategories from "./AddProductCategories";
+import { filtersApi } from "@/components/utilis/api/filtersApi";
+import {
+  createProductsApi,
+  updateProductsApi,
+} from "@/components/utilis/api/productsApi";
 
 const yearRegex = /^(19|20)\d{2}$/;
 
@@ -58,13 +63,7 @@ const AddOrUpdateProduct = ({
         styleCategory,
         materialCategory,
         additionalFeatures,
-      ] = await Promise.all([
-        axios.get("http://localhost:5000/api/category"),
-        axios.get("http://localhost:5000/api/spaces"),
-        axios.get("http://localhost:5000/api/style-category"),
-        axios.get("http://localhost:5000/api/material-category"),
-        axios.get("http://localhost:5000/api/features"),
-      ]);
+      ] = await filtersApi();
 
       setDropdownData({
         mainCategory: mainCategory.data,
@@ -208,24 +207,12 @@ const AddOrUpdateProduct = ({
       formData.append("existingImgUrls", JSON.stringify(existingImageURLs));
     }
 
-    let method = "";
-    let url = "";
-
-    if (addProduct) {
-      url = "http://localhost:5000/api/products";
-      method = "post";
-    } else if (editProduct) {
-      url = `http://localhost:5000/api/products/${product.id}`;
-      method = "put";
-    }
-
     try {
-      const response = await axios[method](url, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      if (addProduct) {
+        response = await createProductsApi(formData);
+      } else if (editProduct) {
+        response = await updateProductsApi(formData, product.id);
+      }
 
       await fetchProducts();
 
