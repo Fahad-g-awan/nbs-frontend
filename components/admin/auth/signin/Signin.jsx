@@ -97,7 +97,7 @@ const Signin = () => {
         </form>
         <p className="text-center mt-4 text-sm">
           Don't have an account?{" "}
-          <a href="/signup" className="text-blue-500">
+          <a href="/admin/signup" className="text-blue-500">
             Sign Up
           </a>
         </p>
