@@ -5,7 +5,7 @@ export const adminSigninApi = async (data) => {
     let response = await api.post("/admin/signin", data);
     console.log("Signin API response", response.data);
 
-    return response.data.token;
+    return response.data.data.token;
   } catch (error) {
     console.log("Signin API error", error);
 
