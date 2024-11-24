@@ -97,7 +97,7 @@ const AddOrUpdateCategory = ({
         throw new Error("Something went wrong");
       }
 
-      let msg = addProduct
+      let msg = addCategory
         ? "Category added successfully!"
         : "Category updated successfully!";
       toast.success(msg, {
